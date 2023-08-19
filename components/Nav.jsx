@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function Nav() {
   const router = useRouter();
-  const [id, setId] = useState("");
+  const [ids, setId] = useState("");
   function getLocalData() {
     const { id } = JSON.parse(localStorage.getItem("displayLogin"));
     setId(id);
@@ -23,7 +23,7 @@ export default function Nav() {
       </h1>
       {/* Desktop */}
       <div className=" w-auto justify-between gap-5 flex  max-sm:hidden">
-        <button className="btn" onClick={() => router.push(`/homepage/${id}`)}>
+        <button className="btn" onClick={() => router.push(`/homepage/${ids}`)}>
           My Profile
         </button>
         <button
@@ -50,7 +50,7 @@ export default function Nav() {
           className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
         >
           <li>
-            <Link href={`/homepage/${123}`}>My Profile</Link>
+            <Link href={`/homepage/${ids}`}>My Profile</Link>
           </li>
           <li>
             <Link href={"/"} className="hover:bg-orange-600 hover:text-white ">
