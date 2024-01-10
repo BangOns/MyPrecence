@@ -12,6 +12,22 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      animation: {
+        dropdown: "dropdown 0.5s ease-in-out forwards ",
+      },
+      keyframes: {
+        dropdown: {
+          "0%": {
+            opacity: "0",
+            zIndex: "0",
+            transform: "translateY(-100%)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0%)",
+          },
+        },
+      },
     },
   },
   plugins: [require("daisyui")],

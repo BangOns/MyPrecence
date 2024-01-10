@@ -1,35 +1,50 @@
 "use client";
+import { CreateUser } from "@/redux/feature/getUserSlice";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { v4 as uuid4 } from "uuid";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 export default function Register() {
+  const userCreateCondition = useSelector((state) => state.users);
   const [nama, setNama] = useState("");
   const [semester, setSemester] = useState("");
   const [password, setPassword] = useState("");
+  const [load, setLoad] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
+  async function handleFunctionSuccess(success) {
+    if (!success.RegisterAccountPending) {
+      if (
+        success.RegisterAccountFullField.length !== 0 &&
+        success.RegisterAccountFullField[0]?.status
+      ) {
+        alert(success.RegisterAccountFullField[0]?.message);
+        router.push("/");
+        setNama("");
+        setPassword("");
+      }
+
+      setLoad(false);
+    } else {
+      setLoad(true);
+    }
+  }
   async function handleRegister(e) {
     e.preventDefault();
-    const CreateUser = {
-      id: uuid4(),
+    const CreateUsers = {
       nama,
       semester,
       password,
       role: parseInt(semester) > 0 ? "user" : "admin",
     };
-    let User = await getLocalStorage();
-    User.push(CreateUser);
-    localStorage.setItem("user", JSON.stringify(User));
-    router.push("/");
-    setNama("");
-    setPassword("");
-    setSemester("");
+    dispatch(CreateUser(CreateUsers));
   }
-  function getLocalStorage() {
-    return localStorage.getItem("user")
-      ? JSON.parse(localStorage.getItem("user"))
-      : [];
-  }
+  useEffect(() => {
+    if (nama !== "" && password !== "") {
+      handleFunctionSuccess(userCreateCondition);
+    }
+  }, [userCreateCondition, dispatch]);
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -104,10 +119,13 @@ export default function Register() {
             </div>
             <div>
               <button
+                disabled={load ? true : false}
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+                disabled:cursor-not-allowed
+                "
               >
-                Register
+                {load ? "Loading..." : "Register"}
               </button>
             </div>
           </form>
@@ -126,3 +144,48 @@ export default function Register() {
     </>
   );
 }
+
+// async function handleRegister(e) {
+//   e.preventDefault();
+// const CreateUser = {
+//   id: uuid4(),
+//   nama,
+//   semester,
+//   password,
+//   role: parseInt(semester) > 0 ? "user" : "admin",
+// };
+//   let User = await getLocalStorage();
+//   User.push(CreateUser);
+//   localStorage.setItem("user", JSON.stringify(User));
+//   router.push("/");
+// setNama("");
+// setPassword("");
+// setSemester("");
+// }
+// function getLocalStorage() {
+//   return localStorage.getItem("user")
+//     ? JSON.parse(localStorage.getItem("user"))
+//     : [];
+// }
+
+// setLoad(true);
+// try {
+//   const response = await fetch(`/api/register`, {
+//     method: "POST",
+//     body: JSON.stringify(CreateUser),
+//   });
+//   const ress = await response.json();
+//   if (ress.status === 200) {
+//     alert(ress.message);
+//     router.push("/");
+//   } else {
+//     alert(ress.message);
+//   }
+// } catch (error) {
+//   console.log(new Error(error));
+// } finally {
+//   setNama("");
+//   setPassword("");
+//   setSemester("");
+//   setLoad(false);
+// }

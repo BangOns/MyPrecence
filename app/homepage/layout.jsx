@@ -1,6 +1,7 @@
-import ButtonInfo from "@/components/ButtonInfo";
-import Nav from "@/components/Nav";
+import ButtonInfo from "@/app/components/ButtonInfo";
+import Nav from "@/app/components/Nav";
 import React from "react";
+import TableAbsen from "../components/TableAbsenAdmin";
 
 export default function RootLayout({ children }) {
   return (
