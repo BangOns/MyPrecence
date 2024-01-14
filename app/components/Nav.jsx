@@ -55,9 +55,14 @@ export default function Nav() {
             <Link href={`/homepage/${session?.user?.id}`}>My Profile</Link>
           </li>
           <li>
-            <Link href={"/"} className="hover:bg-orange-600 hover:text-white ">
+            <button
+              onClick={() => {
+                signOut({ callbackUrl: "/", redirect: false });
+              }}
+              className="hover:bg-orange-600 hover:text-white "
+            >
               Sign Out
-            </Link>
+            </button>
           </li>
         </ul>
       </div>

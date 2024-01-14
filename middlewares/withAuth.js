@@ -1,20 +1,22 @@
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
-export function withAuth(middleware, reqPages) {
+export default function WithAuth(middleware, reqPages) {
   return async (req, next) => {
+    console.log(reqPages);
     const pathname = req.nextUrl.pathname;
-
-    if (reqPages.includes(pathname)) {
-      const token = await getToken({
-        req,
-        secret: process.env.NEXTAUTH_SECRET,
-      });
-      if (!token && reqPages.includes(pathname)) {
-        const urls = new URL("/", req.url);
-        return NextResponse.redirect(urls);
-      }
+    const token = await getToken({
+      req,
+      secret: process.env.NEXTAUTH_SECRET,
+    });
+    console.log(pathname);
+    if (!token) {
+      const urls = new URL("/", req.url);
+      return NextResponse.redirect(urls);
+    } else if (token) {
+      return NextResponse.redirect(new URL("/homepage", req.url));
     }
+
     return middleware(req, next);
   };
 }

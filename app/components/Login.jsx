@@ -2,37 +2,16 @@
 import { LoginUser } from "@/redux/feature/getUserSlice";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Swal from "sweetalert2";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 export default function Login() {
-  const userLoginCondition = useSelector((state) => state.users);
   const [nama, setNama] = useState("");
   const [password, setPassword] = useState("");
   const [activeAccount, setActiveAcccount] = useState(false);
   const [loadings, setLoadings] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const { data: session, status } = useSession();
-  // async function handleFunctionSuccess(success) {
-  //   if (!success.userLoginPending) {
-  //     if (
-  //       success.userLoginFullField.length !== 0 &&
-  //       success.userLoginFullField[0]?.status
-  //     ) {
-  //       router.push("/homepage");
-  //       setActiveAcccount(false);
-  //     } else {
-  //       setActiveAcccount(true);
-  //     }
-  //     setNama("");
-  //     setPassword("");
-  //     setLoadings(false);
-  //   } else {
-  //     setLoadings(true);
-  //   }
-  // }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -46,7 +25,6 @@ export default function Login() {
       signIn("credentials", {
         redirect: false,
         ...user,
-        callbackUrl: "/",
       }).then((value) => {
         if (!value.ok) {
           setActiveAcccount(true);
@@ -60,12 +38,7 @@ export default function Login() {
       console.log(error);
       setLoadings(false);
     }
-    // dispatch(LoginUser(user));
   }
-  // useEffect(() => {
-  //   if (status === "authenticated") {
-  //   }
-  // }, [status]);
 
   return (
     <>
@@ -75,16 +48,7 @@ export default function Login() {
             Sign in to your account
           </h2>
         </div>
-        <div className="w-full flex justify-center">
-          <button
-            className="btn btn-error hover:bg-orange-600"
-            onClick={() => {
-              signOut();
-            }}
-          >
-            Sign Out
-          </button>
-        </div>
+
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
@@ -162,56 +126,3 @@ export default function Login() {
     </>
   );
 }
-
-// async function handleSubmit(e) {
-//   e.preventDefault();
-//   let Users = await JSON.parse(localStorage.getItem("user"));
-//   let FindUser = Users.find((value) => {
-//     return value.nama === nama && value.password === password;
-//   });
-//   let findIndex = Users.indexOf(FindUser);
-//   if (FindUser) {
-//     FindUser.dates = date[new Date().getDay()];
-//     Users[findIndex].dates = date[new Date().getDay()];
-//     localStorage.setItem("displayLogin", JSON.stringify(FindUser));
-//     localStorage.setItem("user", JSON.stringify(Users));
-//     setActiveAcccount(false);
-//     dispatch(GetUsers(FindUser));
-//     router.push("/homepage");
-//   } else {
-//     setActiveAcccount(true);
-//   }
-//   setNama("");
-//   setPassword("");
-// }
-
-// useEffect(() => {
-// Swal.fire({
-//   icon: "info",
-//   title: "Information This Website",
-//   html:
-//     `<ol>` +
-//     `<li>1. This website has 2 roles admin & user account</li>` +
-//     "<li>2. If you want to be an admin, register an account, fill in the semester with zeros</li>" +
-//     "<li>3. If you want to become a user, register an account, fill in the semester above zero</li>" +
-//     "</ol>",
-// });
-// }, []);
-
-// const res = await fetch(
-//   `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/auth`,
-//   {
-//     method: "POST",
-//     body: JSON.stringify(user),
-//   }
-// );
-// const response = await res.json();
-// console.log(response);
-// if (response.status) {
-//   router.push("/homepage");
-//   setNama("");
-//   setPassword("");
-//   setActiveAcccount(false);
-// } else {
-//   setActiveAcccount(true);
-// }

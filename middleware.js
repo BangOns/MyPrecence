@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { withAuth } from "./middlewares/withAuth";
+import WithAuth from "./middlewares/withAuth";
 
-export function mainMiddleware() {
+export function middleware(request) {
   return NextResponse.next();
 }
-export default withAuth(mainMiddleware, ["/homepage"]);
+export default WithAuth(middleware, ["/homepage"]);

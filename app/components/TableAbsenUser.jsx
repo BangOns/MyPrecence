@@ -1,4 +1,3 @@
-import { retrieveDataById } from "../libs/firebase/services";
 import ColumnAbsenUser from "./ColumnAbsenUser";
 import React from "react";
 

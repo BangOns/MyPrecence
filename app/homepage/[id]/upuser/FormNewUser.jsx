@@ -123,28 +123,3 @@ export default function FormNewUser({ users }) {
     </Fragment>
   );
 }
-
-// function GetLocalData() {
-//   const user = JSON.parse(localStorage.getItem("user"));
-//   let filterUser = user.find((value) => value.id === id);
-//   setNama(filterUser.nama);
-//   setSemester(filterUser.semester);
-//   setPassword(filterUser.password);
-//   setRole(filterUser.role);
-// }
-// function handleNewSubmit(e) {
-//   e.preventDefault();
-//   const user = JSON.parse(localStorage.getItem("user"));
-//   let filterUser = user.find((value) => value.id === id);
-//   let IndexUser = user.indexOf(filterUser);
-//   filterUser.nama = nama;
-//   user[IndexUser].nama = nama;
-//   user[IndexUser].semester = semester;
-//   user[IndexUser].password = password;
-//   localStorage.setItem("displayLogin", JSON.stringify(filterUser));
-//   localStorage.setItem("user", JSON.stringify(user));
-//   route.push("/homepage");
-//   setNama("");
-//   setSemester("");
-//   setPassword("");
-// }

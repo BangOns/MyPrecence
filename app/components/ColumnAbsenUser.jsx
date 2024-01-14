@@ -5,7 +5,7 @@ export default function ColumnAbsenUser({ datas, preview = false }) {
   return (
     <Fragment>
       {data?.preview === true
-        ? data?.precence.map((user, index) => {
+        ? data?.precence?.map((user, index) => {
             return (
               <tr
                 key={index}
@@ -24,7 +24,7 @@ export default function ColumnAbsenUser({ datas, preview = false }) {
               </tr>
             );
           })
-        : datas?.precence.map((user, index) => {
+        : datas?.precence?.map((user, index) => {
             return (
               <tr
                 key={index}
@@ -46,13 +46,3 @@ export default function ColumnAbsenUser({ datas, preview = false }) {
     </Fragment>
   );
 }
-
-// {preview && (
-//   <thead>
-//     <tr className="bg-info text-white rounded-md">
-//       <th className="border border-slate-300 font-medium">No</th>
-
-//       <th className="border border-slate-300 font-medium">Waktu hadir</th>
-//     </tr>
-//   </thead>
-// )}

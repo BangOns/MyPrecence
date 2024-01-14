@@ -52,7 +52,7 @@ export default function TableAbsenAdmin() {
   }, [DeleteUserFullField, GetUserByIDSFullField]);
   return (
     <Fragment>
-      {session?.user?.role === "admin" ? (
+      {session?.user?.role === "admin" && FilteredAdmin?.length !== 0 ? (
         <section className="w-full flex justify-center ">
           <div className="overflow-x-auto flex justify-center w-full lg:w-4/5">
             <table className="table border-collapse max-sm:table-xs ">
@@ -89,15 +89,15 @@ export default function TableAbsenAdmin() {
                         <td className={findingDate ? "bg-success" : "bg-error"}>
                           {findingDate ? "Hadir" : "Belum Hadir"}
                         </td>
-                        <td className="flex gap-5 justify-center">
+                        <td className="flex gap-5 justify-center max-[600px]:flex-col max-[600px]:items-center ">
                           <button
-                            className="btn btn-error"
+                            className="btn btn-error max-[500px]:btn-sm max-[500px]:text-[10px] max-[390px]:text-[8px]"
                             onClick={() => dispatch(DeleteUser(user.id))}
                           >
                             <FaRegTrashAlt /> Delete
                           </button>
                           <button
-                            className="btn btn-info"
+                            className="btn btn-info max-[500px]:btn-sm max-[500px]:text-[10px] max-[390px]:text-[8px]"
                             onClick={() => getPreviews(user.id)}
                           >
                             <SlArrowDown /> Preview
@@ -117,7 +117,11 @@ export default function TableAbsenAdmin() {
             </table>
           </div>
         </section>
-      ) : null}
+      ) : (
+        <div className="w-full flex justify-center">
+          <h1 className="font-bold text-2xl text-slate-500">Tidak ada data</h1>
+        </div>
+      )}
     </Fragment>
   );
 }
